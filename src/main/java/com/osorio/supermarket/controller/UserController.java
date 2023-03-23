@@ -1,7 +1,5 @@
 package com.osorio.supermarket.controller;
-import com.osorio.supermarket.entity.Pursache;
 import com.osorio.supermarket.entity.User;
-import com.osorio.supermarket.service.PursacheService;
 import com.osorio.supermarket.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,12 +17,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/User")
+    @GetMapping("/user")
     public ResponseEntity<List<User>>getAllUser(){
         return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
     }
 
-    @PostMapping()
+    @PostMapping("/user")
     public ResponseEntity<User>saveUser(@RequestBody User user){
         return new ResponseEntity<>(userService.saveUsers(user), HttpStatus.OK);
     }

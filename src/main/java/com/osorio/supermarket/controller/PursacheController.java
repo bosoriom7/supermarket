@@ -18,12 +18,12 @@ public class PursacheController {
     @Autowired
     private PursacheService pursacheService;
 
-    @GetMapping("/Pursache")
+    @GetMapping("/pursache")
     public ResponseEntity<List<Pursache>>getAllPursache(){
         return new ResponseEntity<>(pursacheService.getAllPursaches(), HttpStatus.OK);
     }
 
-    @PostMapping()
+    @PostMapping("/pursache")
     public ResponseEntity<Pursache>savePursache(@RequestBody Pursache pursache){
         return new ResponseEntity<>(pursacheService.savePursache(pursache), HttpStatus.OK);
     }

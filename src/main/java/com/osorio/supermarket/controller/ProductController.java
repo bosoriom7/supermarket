@@ -1,5 +1,4 @@
 package com.osorio.supermarket.controller;
-
 import com.osorio.supermarket.entity.Product;
 import com.osorio.supermarket.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +21,7 @@ public class ProductController {
         return new ResponseEntity<>(productService.getAllProducts(), HttpStatus.OK);
     }
 
-   @PostMapping()
+   @PostMapping("/product")
     public ResponseEntity<Product> saveProduct(@RequestBody Product product){
         return new ResponseEntity<>(productService.saveProduct(product), HttpStatus.CREATED);
     }
