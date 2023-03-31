@@ -1,4 +1,4 @@
-package com.osorio.supermarket.entity;
+package com.osorio.supermarket.controller.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,7 +14,10 @@ public class Pursache {
 
     @Id
     @GeneratedValue
-    private int userId;
-    private int pursachetId;
+    private int pursacheId;
+    //private int userId;
+    private String namePursache;
+    private int valor;
+
 
 }
