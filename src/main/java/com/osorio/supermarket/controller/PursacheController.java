@@ -1,5 +1,5 @@
 package com.osorio.supermarket.controller;
-import com.osorio.supermarket.controller.entity.Pursache;
+import com.osorio.supermarket.entity.Pursache;
 import com.osorio.supermarket.service.PursacheService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

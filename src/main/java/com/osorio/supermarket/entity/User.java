@@ -1,4 +1,4 @@
-package com.osorio.supermarket.controller.entity;
+package com.osorio.supermarket.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -19,10 +19,7 @@ public class User {
     @NotNull(message = "Campo requerido")
     private String name;
 
-
     private String lastName;
     private int age;
-
-
 
 }

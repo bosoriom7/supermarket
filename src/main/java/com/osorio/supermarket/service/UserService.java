@@ -1,6 +1,6 @@
 package com.osorio.supermarket.service;
 
-import com.osorio.supermarket.controller.entity.User;
+import com.osorio.supermarket.entity.User;
 import com.osorio.supermarket.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

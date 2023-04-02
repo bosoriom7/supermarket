@@ -1,6 +1,6 @@
 package com.osorio.supermarket.service;
 
-import com.osorio.supermarket.controller.entity.Pursache;
+import com.osorio.supermarket.entity.Pursache;
 import com.osorio.supermarket.repository.PursacheRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

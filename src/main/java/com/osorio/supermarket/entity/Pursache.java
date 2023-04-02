@@ -1,4 +1,4 @@
-package com.osorio.supermarket.controller.entity;
+package com.osorio.supermarket.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

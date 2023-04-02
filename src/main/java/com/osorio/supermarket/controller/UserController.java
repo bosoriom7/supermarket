@@ -1,5 +1,5 @@
 package com.osorio.supermarket.controller;
-import com.osorio.supermarket.controller.entity.User;
+import com.osorio.supermarket.entity.User;
 import com.osorio.supermarket.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
