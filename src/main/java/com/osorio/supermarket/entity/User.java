@@ -5,12 +5,16 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 //Anotaciones
 @Entity
 @Table(name = "Users")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
     @Id
     @GeneratedValue
@@ -18,8 +22,10 @@ public class User {
 
     @NotNull(message = "Campo requerido")
     private String name;
-
     private String lastName;
     private int age;
+    private String email;
+    private String password;
+
 
 }

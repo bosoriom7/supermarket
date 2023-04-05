@@ -1,12 +1,20 @@
 package com.osorio.supermarket.controller;
+import com.osorio.supermarket.dto.request.UserRequest;
+import com.osorio.supermarket.dto.response.UserResponse;
 import com.osorio.supermarket.entity.User;
+import com.osorio.supermarket.exception.UserNotFoundException;
 import com.osorio.supermarket.service.UserService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,9 +22,10 @@ import java.util.Optional;
 @RestController
 public class UserController {
 
-    //Inyectando el servicio al controller
-    @Autowired
-    private UserService userService;
+    //Inyectando la interfaz al controller
+    private final UserService userService;
+
+    public UserController(UserService userService) {this.userService = userService;}
 
     @GetMapping
     public ResponseEntity<List<User>>getAllUser(){
@@ -29,20 +38,33 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User>saveUser(@RequestBody @Valid User user){
-        return new ResponseEntity<>(userService.saveUsers(user), HttpStatus.CREATED);
+    public ResponseEntity<UserResponse>saveUser(@RequestBody @Valid UserRequest userRequest){
+        return new ResponseEntity<>(userService.saveUser(userRequest), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{user-id}")
     public ResponseEntity<Void> deleteUserById(@PathVariable("user-id") int userId){
-        System.out.println(userId);
         userService.deleteUserById(userId);
+
+
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+    /*
+        @DeleteMapping("/{product-id}")
+    public ResponseEntity<Void>deleteProductBId(@PathVariable("product-id") int productId){
+        try{
+            productService.deleteProductById(productId);
+        }catch (ProductNoFoundException ex){
+            System.out.println(ex.getMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+     */
 
     @PutMapping("/{user-id}")
     public ResponseEntity<User> updateUserById(@RequestBody @Valid User user, @PathVariable("user-id") int userId){
         return new ResponseEntity<>(userService.updateUserById(user,userId), HttpStatus.OK);
     }
-
 }

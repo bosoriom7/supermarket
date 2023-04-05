@@ -1,9 +1,7 @@
 package com.osorio.supermarket.service;
-
 import com.osorio.supermarket.dto.request.ProductRequest;
 import com.osorio.supermarket.dto.response.ProductResponse;
 import com.osorio.supermarket.entity.Product;
-
 import java.util.List;
 import java.util.Optional;
 

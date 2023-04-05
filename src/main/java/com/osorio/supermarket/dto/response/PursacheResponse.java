@@ -1,12 +1,12 @@
-package com.osorio.supermarket.dto.request;
+package com.osorio.supermarket.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+
 @Data
 @AllArgsConstructor
-public class PursacheRequest {
+public class PursacheResponse {
     private String namePursache;
     private int valor;
-    private String color;
 
 }
