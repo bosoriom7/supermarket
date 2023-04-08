@@ -2,55 +2,61 @@ package com.osorio.supermarket.service;
 import com.osorio.supermarket.dto.request.ProductRequest;
 import com.osorio.supermarket.dto.response.ProductResponse;
 import com.osorio.supermarket.entity.Product;
-import com.osorio.supermarket.exception.ProductNoFoundException;
+import com.osorio.supermarket.exception.ProductNotFoundException;
+import com.osorio.supermarket.mapper.ProductMapper;
+import com.osorio.supermarket.mapper.ProductResponseMapper;
 import com.osorio.supermarket.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl implements ProductService{
-    private final ProductRepository productRepository;
 
-    public ProductServiceImpl(ProductRepository productRepository) {
+    private final String PRODUCT_NOT_FOUND_MESSAGE = "Producto no encontrado";
+    private final ProductRepository productRepository;
+    private final ProductMapper productMapper;
+    private final ProductResponseMapper productResponseMapper;
+
+    public ProductServiceImpl(ProductRepository productRepository, ProductMapper productMapper, ProductResponseMapper productResponseMapper) {
         this.productRepository = productRepository;
+        this.productMapper = productMapper;
+        this.productResponseMapper = productResponseMapper;
     }
 
     @Override
-    public List<Product> getAllProducts(){
-        return productRepository.findAll();
+    public List<ProductResponse> getAllProducts(){
+        return productRepository.findAll().stream().map(productResponseMapper).toList();
     }
 
     @Override
     public ProductResponse saveProduct(ProductRequest productRequest){
-        double priceSelf = (productRequest.getPricePurchase() * 0.5) + productRequest.getPricePurchase();
-        Product product = new Product(0, productRequest.getName(), productRequest.getQuantity(), productRequest.getPricePurchase(), priceSelf);
+        Product product = productMapper.apply(productRequest);
         Product productSave = productRepository.save(product);
-        return new ProductResponse(productSave.getName(), productSave.getQuantity(), productSave.getPriceSelf());
+        return productResponseMapper.apply(productSave);
     }
 
     @Override
     public void deleteProductById(int productId){
-        Optional<Product> product = productRepository.findById(productId);
-        if (product.isPresent()) {
-            productRepository.deleteById(productId);
-        }else{
-            throw new ProductNoFoundException("Producto con Id: " + productId + " no encontrado");
-        }
+        productRepository.findById(productId).orElseThrow(() -> new ProductNotFoundException(PRODUCT_NOT_FOUND_MESSAGE));
+        productRepository.deleteById(productId);
     }
 
     @Override
-    public Product updateProductById(Product product, int productId){
-        Optional<Product> productToUpdate = productRepository.findById(productId);
-        if (productToUpdate.isPresent()) {
-            product.setProductId(productId);
-            product = productRepository.save(product);
-        }return product;
+    public ProductResponse updateProductById(ProductRequest productRequest, int productId) {
+        Product product = productMapper.apply(productRequest);
+        product.setProductId(productId);
+        return productRepository.findById(product.getProductId())
+                .map(existingProduct -> productRepository.save(product))
+                .map(productResponseMapper)
+                .orElseThrow(() -> new ProductNotFoundException(PRODUCT_NOT_FOUND_MESSAGE));
     }
 
     @Override
-    public Optional<Product> getProductById(int productId){
-        return productRepository.findById(productId);
+    public Optional<ProductResponse> getProductById(int productId) {
+        return productRepository.findById(productId)
+                .map(productResponseMapper)
+                .or(() -> { throw new ProductNotFoundException(PRODUCT_NOT_FOUND_MESSAGE); });
     }
-
 }

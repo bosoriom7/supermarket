@@ -2,7 +2,7 @@ package com.osorio.supermarket.controller;
 import com.osorio.supermarket.dto.request.ProductRequest;
 import com.osorio.supermarket.dto.response.ProductResponse;
 import com.osorio.supermarket.entity.Product;
-import com.osorio.supermarket.exception.ProductNoFoundException;
+import com.osorio.supermarket.exception.ProductNotFoundException;
 import com.osorio.supermarket.service.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -29,12 +29,12 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Product>> getAllProduct(){
+    public ResponseEntity<List<ProductResponse>> getAllProduct(){
         return new ResponseEntity<>(productService.getAllProducts(), HttpStatus.OK);
     }
 
     @GetMapping("/{product-id}")
-    public ResponseEntity<Optional<Product>>getProductById(@PathVariable("product-id")int productId){
+    public ResponseEntity<Optional<ProductResponse>>getProductById(@PathVariable("product-id")int productId){
        return new ResponseEntity<>(productService.getProductById(productId), HttpStatus.OK);
     }
 
@@ -45,19 +45,13 @@ public class ProductController {
 
     @DeleteMapping("/{product-id}")
     public ResponseEntity<Void>deleteProductBId(@PathVariable("product-id") int productId){
-        try{
-            productService.deleteProductById(productId);
-        }catch (ProductNoFoundException ex){
-            System.out.println(ex.getMessage());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
+        productService.deleteProductById(productId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PutMapping("/{product-id}")
-    public ResponseEntity<Product> updateProductById(@RequestBody @Valid Product product, @PathVariable("product-id") int productId){
-        return  new ResponseEntity<>(productService.updateProductById(product, productId), HttpStatus.OK);
+    public ResponseEntity<ProductResponse> updateProductById(@RequestBody @Valid ProductRequest productRequest, @PathVariable("product-id") int productId){
+        return  new ResponseEntity<>(productService.updateProductById(productRequest, productId), HttpStatus.OK);
     }
 
 }
