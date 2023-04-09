@@ -10,6 +10,6 @@ import java.util.function.Function;
 public class ProductResponseMapper implements Function<Product, ProductResponse> {
     @Override
     public ProductResponse apply(Product product) {
-        return new ProductResponse(product.getName(), product.getQuantity(), product.getPriceSelf());
+        return new ProductResponse(product.getProductId(), product.getName(), product.getQuantity(), product.getPriceSelf());
     }
 }

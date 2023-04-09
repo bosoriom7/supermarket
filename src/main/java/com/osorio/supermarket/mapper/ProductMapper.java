@@ -12,7 +12,7 @@ public class ProductMapper implements Function<ProductRequest, Product> {
     public Product apply(ProductRequest productRequest) {
         double priceSelf = (productRequest.getPricePurchase() * 0.5) + productRequest.getPricePurchase();
         return new Product(
-                0, productRequest.getName(), productRequest.getQuantity(), productRequest.getPricePurchase(), priceSelf
+                productRequest.getProductId(), productRequest.getName(), productRequest.getQuantity(), productRequest.getPricePurchase(), priceSelf
         );
     }
 }

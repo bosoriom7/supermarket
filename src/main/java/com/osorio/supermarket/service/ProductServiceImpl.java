@@ -39,14 +39,13 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public void deleteProductById(int productId){
-        productRepository.findById(productId).orElseThrow(() -> new ProductNotFoundException(PRODUCT_NOT_FOUND_MESSAGE));
-        productRepository.deleteById(productId);
+        productRepository.findById(productId)
+                .ifPresent(existingProduct -> productRepository.deleteById(productId));
     }
 
     @Override
-    public ProductResponse updateProductById(ProductRequest productRequest, int productId) {
+    public ProductResponse updateProductById(ProductRequest productRequest) {
         Product product = productMapper.apply(productRequest);
-        product.setProductId(productId);
         return productRepository.findById(product.getProductId())
                 .map(existingProduct -> productRepository.save(product))
                 .map(productResponseMapper)

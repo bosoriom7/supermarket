@@ -8,6 +8,8 @@ import lombok.Data;
 
 @Data
 public class ProductRequest {
+    private int productId = 0;
+
     @NotNull
     @NotBlank(message = "Nombre es requerido")
     private String name;
