@@ -27,14 +27,14 @@ public class PursacheController {
     public PursacheController(PurchaseService purchaseService) {this.purchaseService = purchaseService;}
 
     @GetMapping
-    public ResponseEntity<List<Pursache>>getAllPursache(){
+    public ResponseEntity<List<PursacheResponse>>getAllPursache(){
         return new ResponseEntity<>(purchaseService.getAllPursaches(), HttpStatus.OK);
     }
 
-    @GetMapping("/{pursache-id}")
-    public ResponseEntity<Optional<Pursache>>getPursacheById(@PathVariable ("pursache-id")int pursacheId){
+/*    @GetMapping("/{pursache-id}")
+    public ResponseEntity<Optional<PursacheResponse>>getPursacheById(@PathVariable ("pursache-id")int pursacheId){
         return new ResponseEntity<>(purchaseService.getPursacheById(pursacheId),HttpStatus.OK);
-    }
+    }*/
 
     @PostMapping
     public ResponseEntity<PursacheResponse>savePursache(@RequestBody @Valid PursacheRequest pursacheRequest){
@@ -49,7 +49,12 @@ public class PursacheController {
     }
 
     @PutMapping("/{pursache-id}")
-    public ResponseEntity<Pursache>updatePursacheById(@RequestBody @Valid Pursache pursache, @PathVariable("pursache-id")int pursacheId){
-        return new ResponseEntity<>(purchaseService.updatePursacheById(pursache,pursacheId), HttpStatus.OK);
+    public ResponseEntity<PursacheResponse>updatePursacheById(@RequestBody @Valid PursacheRequest pursacheRequest){
+        return new ResponseEntity<>(purchaseService.updatePursacheById(pursacheRequest), HttpStatus.OK);
+    }
+
+    @GetMapping("/{pursache-id}")
+    public ResponseEntity<Optional<String>>getColorById(@PathVariable ("pursache-id")int pursacheId){
+        return new ResponseEntity<>(purchaseService.getColorById(pursacheId),HttpStatus.OK);
     }
 }

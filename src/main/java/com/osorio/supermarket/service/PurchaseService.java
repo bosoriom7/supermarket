@@ -7,13 +7,15 @@ import java.util.List;
 import java.util.Optional;
 
 public interface PurchaseService {
-    public List <Pursache> getAllPursaches();
+    public List <PursacheResponse> getAllPursaches();
 
-    public Optional<Pursache> getPursacheById(int pursacheId);
+    //public Optional<PursacheResponse> getPursacheById(int pursacheId);
 
     public PursacheResponse savePursache(@Valid PursacheRequest pursacheRequest);
 
-    public Pursache updatePursacheById(Pursache pursache, int pursacheID);
+    public PursacheResponse updatePursacheById(PursacheRequest pursacheRequest);
 
     public void deletePursacheById(int pursacheID);
+
+    public Optional<String>getColorById(int pursacheId);
 }

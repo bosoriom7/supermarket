@@ -5,6 +5,10 @@ import com.osorio.supermarket.dto.response.ProductResponse;
 import com.osorio.supermarket.dto.response.UserResponse;
 import com.osorio.supermarket.entity.Product;
 import com.osorio.supermarket.entity.User;
+import com.osorio.supermarket.exception.UserNotFoundException;
+import com.osorio.supermarket.mapper.UserMapper;
+import com.osorio.supermarket.mapper.UserResponseMapper;
+import com.osorio.supermarket.repository.PursacheRepository;
 import com.osorio.supermarket.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
@@ -19,40 +23,49 @@ public class UserServiceImpl implements UserService{
     //Inyectando el repositorio en el servicio
     //Se declara final cuando no nos interesa crear clases derivadas de dicha clase
     private UserRepository userRepository;
+    private final String USER_NOT_FOUND_MESSAGE = "Usuario no encontrado";
 
-    public UserServiceImpl(UserRepository userRepository) {this.userRepository = userRepository;}
+    private final UserMapper userMapper;
+
+    private final UserResponseMapper userResponseMapper;
+
+    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, UserResponseMapper userResponseMapper) {
+        this.userRepository = userRepository;
+        this.userMapper = userMapper;
+        this.userResponseMapper = userResponseMapper;
+    }
 
     @Override
-    public List<User>getAllUsers(){return userRepository.findAll();}
+    public List<UserResponse>getAllUsers(){
+        return userRepository.findAll().stream().map(userResponseMapper).toList();}
 
         @Override
         public UserResponse saveUser(UserRequest userRequest) {
-        User user = new User(0, userRequest.getName(), userRequest.getLastName(), userRequest.getAge(), userRequest.getEmail(), userRequest.getPassword());
+        User user = userMapper.apply(userRequest);
         User userSave = userRepository.save(user);
-        return new UserResponse(userSave.getName(),userSave.getLastName(),userRequest.getAge(), userRequest.getEmail());
+        return userResponseMapper.apply(userSave);
         }
 
     @Override
-    public User deleteUserById(int userId){
-        Optional<User> user = userRepository.findById(userId);
-        if (user.isPresent()){
-            userRepository.deleteById(userId);
-        }
-        return null;
+    public void deleteUserById(int userId){
+        userRepository.findById(userId)
+        .ifPresent(existingUser -> userRepository.deleteById(userId));
     }
 
     @Override
-    public User updateUserById(User user, int userId){
-        Optional<User> userToUpdate = userRepository.findById(userId);
-        if (userToUpdate.isPresent()) {
-            user.setUserId(userId);
-            user = userRepository.save(user);
-        }
-        return user;
+    public UserResponse updateUserById(UserRequest userRequest){
+        User user = userMapper.apply(userRequest);
+        return userRepository.findById(user.getUserId())
+                .map(existingUser ->userRepository.save(user))
+                .map(userResponseMapper)
+                .orElseThrow(() -> new UserNotFoundException(USER_NOT_FOUND_MESSAGE));
     }
 
     @Override
-    public Optional<User> getUserById(int userId) {
-        return userRepository.findById(userId);
+    public Optional<UserResponse> getUserById(int userId) {
+        return userRepository.findById(userId)
+                .map(userResponseMapper)
+                .or(()->{throw new UserNotFoundException(USER_NOT_FOUND_MESSAGE);});
     }
+
 }

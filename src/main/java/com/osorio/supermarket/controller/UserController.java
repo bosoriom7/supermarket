@@ -1,5 +1,7 @@
 package com.osorio.supermarket.controller;
+import com.osorio.supermarket.dto.request.PursacheRequest;
 import com.osorio.supermarket.dto.request.UserRequest;
+import com.osorio.supermarket.dto.response.PursacheResponse;
 import com.osorio.supermarket.dto.response.UserResponse;
 import com.osorio.supermarket.entity.User;
 import com.osorio.supermarket.exception.UserNotFoundException;
@@ -28,12 +30,12 @@ public class UserController {
     public UserController(UserService userService) {this.userService = userService;}
 
     @GetMapping
-    public ResponseEntity<List<User>>getAllUser(){
+    public ResponseEntity<List<UserResponse>>getAllUser(){
         return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
     }
 
     @GetMapping("/{user-id}")
-    public ResponseEntity<Optional<User>> getUserById(@PathVariable("user-id")int userId){
+    public ResponseEntity<Optional<UserResponse>> getUserById(@PathVariable("user-id")int userId){
         return new ResponseEntity<>(userService.getUserById(userId),HttpStatus.OK);
     }
 
@@ -45,10 +47,14 @@ public class UserController {
     @DeleteMapping("/{user-id}")
     public ResponseEntity<Void> deleteUserById(@PathVariable("user-id") int userId){
         userService.deleteUserById(userId);
-
-
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @PutMapping
+    public ResponseEntity<UserResponse> updateUserById(@RequestBody @Valid UserRequest userRequest){
+        return new ResponseEntity<>(userService.updateUserById(userRequest), HttpStatus.OK);
+    }
+
     /*
         @DeleteMapping("/{product-id}")
     public ResponseEntity<Void>deleteProductBId(@PathVariable("product-id") int productId){
@@ -63,8 +69,4 @@ public class UserController {
     }
      */
 
-    @PutMapping("/{user-id}")
-    public ResponseEntity<User> updateUserById(@RequestBody @Valid User user, @PathVariable("user-id") int userId){
-        return new ResponseEntity<>(userService.updateUserById(user,userId), HttpStatus.OK);
-    }
 }

@@ -7,15 +7,14 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
-    public List<User> getAllUsers();
+    public List<UserResponse> getAllUsers();
 
     public UserResponse saveUser(UserRequest userRequest);
 
-    public User deleteUserById(int userId);
+    public void deleteUserById(int userId);
 
-    public User updateUserById(User user, int userId);
+    public UserResponse updateUserById(UserRequest userRequest);
 
-    public Optional<User>getUserById(int userId);
-
+    public Optional<UserResponse>getUserById(int userId);
 
 }

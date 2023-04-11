@@ -17,6 +17,6 @@ public class ProductRequest {
     @Min(value = 1, message = "rango permitido desde 1 hasta 100")
     @Max(value = 100, message = "rango permitido desde 1 hasta 100")
     private int quantity;
-
+    
     private double pricePurchase;
 }

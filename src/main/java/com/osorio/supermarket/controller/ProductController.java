@@ -1,8 +1,6 @@
 package com.osorio.supermarket.controller;
 import com.osorio.supermarket.dto.request.ProductRequest;
 import com.osorio.supermarket.dto.response.ProductResponse;
-import com.osorio.supermarket.entity.Product;
-import com.osorio.supermarket.exception.ProductNotFoundException;
 import com.osorio.supermarket.service.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;

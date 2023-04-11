@@ -1,9 +1,7 @@
 package com.osorio.supermarket.mapper;
-
 import com.osorio.supermarket.dto.request.ProductRequest;
 import com.osorio.supermarket.entity.Product;
 import org.springframework.stereotype.Service;
-
 import java.util.function.Function;
 
 @Service
