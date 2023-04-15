@@ -54,8 +54,9 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public Optional<ProductResponse> getProductById(int productId) {
-        return productRepository.findById(productId)
+        return Optional.ofNullable(productRepository.findById(productId)
                 .map(productResponseMapper)
-                .or(() -> { throw new ProductNotFoundException(PRODUCT_NOT_FOUND_MESSAGE); });
+                .orElseThrow(() -> new ProductNotFoundException(PRODUCT_NOT_FOUND_MESSAGE)));
+
     }
 }

@@ -12,11 +12,11 @@ import lombok.NoArgsConstructor;
 
 //Anotaciones:
 @Entity
-@Table(name = "Pursaches")
+@Table(name = "pursaches")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Pursache {
+public class Purchase {
 
     @Id
     @GeneratedValue

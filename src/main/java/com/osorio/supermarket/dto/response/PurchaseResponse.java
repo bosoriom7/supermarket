@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class PursacheResponse {
+public class PurchaseResponse {
 
     @Id
     private int pursacheId;

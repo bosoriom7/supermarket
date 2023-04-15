@@ -1,10 +1,6 @@
 package com.osorio.supermarket.controller;
-import com.osorio.supermarket.dto.request.PursacheRequest;
 import com.osorio.supermarket.dto.request.UserRequest;
-import com.osorio.supermarket.dto.response.PursacheResponse;
 import com.osorio.supermarket.dto.response.UserResponse;
-import com.osorio.supermarket.entity.User;
-import com.osorio.supermarket.exception.UserNotFoundException;
 import com.osorio.supermarket.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
