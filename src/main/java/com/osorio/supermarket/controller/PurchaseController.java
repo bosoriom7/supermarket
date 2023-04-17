@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.util.List;
 import java.util.Optional;
 
-@RequestMapping("/pursaches")
+@RequestMapping("/purchases")
 @RestController
 public class PurchaseController {
 
@@ -26,8 +26,8 @@ public class PurchaseController {
     public PurchaseController(PurchaseService purchaseService) {this.purchaseService = purchaseService;}
 
     @GetMapping
-    public ResponseEntity<List<PurchaseResponse>>getAllPursache(){
-        return new ResponseEntity<>(purchaseService.getAllPursaches(), HttpStatus.OK);
+    public ResponseEntity<List<PurchaseResponse>>getAllPurchases(){
+        return new ResponseEntity<>(purchaseService.getAllPurchases(), HttpStatus.OK);
     }
 
 /*    @GetMapping("/{pursache-id}")
@@ -36,23 +36,23 @@ public class PurchaseController {
     }*/
 
     @PostMapping
-    public ResponseEntity<PurchaseResponse>savePursache(@RequestBody @Valid PurchaseRequest purchaseRequest){
-        return new ResponseEntity<>(purchaseService.savePursache(purchaseRequest), HttpStatus.CREATED);
+    public ResponseEntity<PurchaseResponse>savePurchase(@RequestBody @Valid PurchaseRequest purchaseRequest){
+        return new ResponseEntity<>(purchaseService.savePurchase(purchaseRequest), HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/{pursache-id}")
-    public ResponseEntity<Void> deletePursacheById(@PathVariable("pursache-id") int pursacheId){
-        purchaseService.deletePursacheById(pursacheId);
+    @DeleteMapping("/{purchase-id}")
+    public ResponseEntity<Void> deletePurchaseById(@PathVariable("purchase-id") int pursacheId){
+        purchaseService.deletePurchaseById(pursacheId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PutMapping("/{pursache-id}")
-    public ResponseEntity<PurchaseResponse>updatePursacheById(@RequestBody @Valid PurchaseRequest purchaseRequest){
-        return new ResponseEntity<>(purchaseService.updatePursacheById(purchaseRequest), HttpStatus.OK);
+    @PutMapping("/{purchase-id}")
+    public ResponseEntity<PurchaseResponse>updatePurchaseById(@RequestBody @Valid PurchaseRequest purchaseRequest){
+        return new ResponseEntity<>(purchaseService.updatePurchaseById(purchaseRequest), HttpStatus.OK);
     }
 
-    @GetMapping("/{pursache-id}")
-    public ResponseEntity<Optional<String>>getColorById(@PathVariable ("pursache-id")int pursacheId){
+    @GetMapping("/{purchase-id}")
+    public ResponseEntity<Optional<String>>getColorById(@PathVariable ("purchase-id")int pursacheId){
         return new ResponseEntity<>(purchaseService.getColorById(pursacheId),HttpStatus.OK);
     }
 

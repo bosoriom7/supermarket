@@ -21,5 +21,5 @@ public interface PurchaseRepository extends JpaRepository<Purchase, Integer> {
     Optional<Purchase> findByColorAndValor(String color, int valor);
 
     //select * from purchases where color="rojo" order by id;
-    List<Purchase> findByColorOrderByPursacheId(String color);
+    List<Purchase> findByColorOrderByPurchaseId(String color);
 }

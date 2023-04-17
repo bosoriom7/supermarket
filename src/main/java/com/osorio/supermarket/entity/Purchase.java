@@ -20,11 +20,11 @@ public class Purchase {
 
     @Id
     @GeneratedValue
-    private int pursacheId;
+    private int purchaseId;
 
     @NotNull
     @NotBlank(message = "Nombre es requerido")
-    private String namePursache;
+    private String namePurchase;
     private int valor;
     private String color;
 }

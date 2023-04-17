@@ -10,6 +10,6 @@ import java.util.function.Function;
 public class PurchaseResponseMapper implements Function<Purchase, PurchaseResponse> {
     @Override
     public PurchaseResponse apply(Purchase purchase) {
-        return new PurchaseResponse(purchase.getPursacheId(), purchase.getNamePursache(), purchase.getValor());
+        return new PurchaseResponse(purchase.getPurchaseId(), purchase.getNamePurchase(), purchase.getValor());
     }
 }

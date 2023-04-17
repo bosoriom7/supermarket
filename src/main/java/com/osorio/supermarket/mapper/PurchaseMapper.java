@@ -10,6 +10,6 @@ public class PurchaseMapper implements Function<PurchaseRequest, Purchase> {
 
     @Override
     public Purchase apply(PurchaseRequest purchaseRequest) {
-        return new Purchase(purchaseRequest.getPursacheId(), purchaseRequest.getNamePursache(), purchaseRequest.getValor(), purchaseRequest.getColor());
+        return new Purchase(purchaseRequest.getPurchaseId(), purchaseRequest.getNamePurchase(), purchaseRequest.getValor(), purchaseRequest.getColor());
     }
 }

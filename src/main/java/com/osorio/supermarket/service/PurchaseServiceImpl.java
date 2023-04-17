@@ -13,7 +13,7 @@ import java.util.Optional;
 public class PurchaseServiceImpl implements PurchaseService{
 
 
-    private String ERROR_PURSACHE = "Id de pursache no encontrado";
+    private String ERROR_PURCHASE = "Id de pursache no encontrado";
     //Inyectando el repositorio en el servicio
     //Se declara final cuando no nos interesa crear clases derivadas de dicha clase
     private final PurchaseRepository purchaseRepository;
@@ -31,51 +31,51 @@ public class PurchaseServiceImpl implements PurchaseService{
 
     //Sobrescribiendo los métodos
     @Override
-    public List<PurchaseResponse> getAllPursaches(){
+    public List<PurchaseResponse> getAllPurchases(){
         return purchaseRepository.findAll().stream().map(purchaseResponseMapper).toList();}
 
     @Override
-    public void deletePursacheById(int pursacheId){
-        Optional<Purchase> pursache = purchaseRepository.findById(pursacheId);
-        if (pursache.isPresent()) {
-            purchaseRepository.deleteById(pursacheId);
+    public void deletePurchaseById(int purchaseID){
+        Optional<Purchase> purchase = purchaseRepository.findById(purchaseID);
+        if (purchase.isPresent()) {
+            purchaseRepository.deleteById(purchaseID);
         }
     }
 
     @Override
-    public Optional<String>getColorById(int pursacheId){
-        return purchaseRepository.findById(pursacheId)
-                .map(pursache->pursache.getColor())
-                .or(()->{throw new IllegalArgumentException(ERROR_PURSACHE);});
+    public Optional<String>getColorById(int purchaseID){
+        return purchaseRepository.findById(purchaseID)
+                .map(purchase->purchase.getColor())
+                .or(()->{throw new IllegalArgumentException(ERROR_PURCHASE);});
     }
 
     @Override
     public Optional<PurchaseResponse> findByColor(String color) {
-        //Optional<Purchase> pursacheByColor =
+        //Optional<Purchase> purchaseByColor =
         return Optional.ofNullable(purchaseRepository.findByColor(color)
                 .map(purchaseResponseMapper)
                 .orElseThrow(IllegalArgumentException::new));
     }
 
     @Override
-    public PurchaseResponse updatePursacheById(PurchaseRequest purchaseRequest){
+    public PurchaseResponse updatePurchaseById(PurchaseRequest purchaseRequest){
         Purchase purchase = purchaseMapper.apply(purchaseRequest);
-        return purchaseRepository.findById(purchase.getPursacheId())
-                .map(existingPursache -> purchaseRepository.save(purchase))
+        return purchaseRepository.findById(purchase.getPurchaseId())
+                .map(existingPurchase -> purchaseRepository.save(purchase))
                 .map(purchaseResponseMapper)
-                .orElseThrow(()-> new IllegalArgumentException(ERROR_PURSACHE));
+                .orElseThrow(()-> new IllegalArgumentException(ERROR_PURCHASE));
     }
 
 /*    @Override
-    public Optional <PursacheResponse> getPursacheById(int pursacheId){
-        return pursacheRepository.findById(pursacheId)
+    public Optional <PursacheResponse> getPursacheById(int purchaseID){
+        return pursacheRepository.findById(purchaseID)
                 .map(pursacheResponseMapper)
                 .or(()->{throw new IllegalArgumentException(ERROR_PURSACHE);});
     }*/
 
 
     @Override
-    public PurchaseResponse savePursache(PurchaseRequest purchaseRequest) {
+    public PurchaseResponse savePurchase(PurchaseRequest purchaseRequest) {
         Purchase purchase = purchaseMapper.apply(purchaseRequest);
         Purchase savePurchase = purchaseRepository.save(purchase);
         return purchaseResponseMapper.apply(savePurchase);

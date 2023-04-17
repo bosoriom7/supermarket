@@ -6,17 +6,15 @@ import java.util.List;
 import java.util.Optional;
 
 public interface PurchaseService {
-    public List <PurchaseResponse> getAllPursaches();
+    public List <PurchaseResponse> getAllPurchases();
 
-    //public Optional<PursacheResponse> getPursacheById(int pursacheId);
+    public PurchaseResponse savePurchase(@Valid PurchaseRequest purchaseRequest);
 
-    public PurchaseResponse savePursache(@Valid PurchaseRequest purchaseRequest);
+    public PurchaseResponse updatePurchaseById(PurchaseRequest purchaseRequest);
 
-    public PurchaseResponse updatePursacheById(PurchaseRequest purchaseRequest);
+    public void deletePurchaseById(int purchaseID);
 
-    public void deletePursacheById(int pursacheID);
-
-    public Optional<String>getColorById(int pursacheId);
+    public Optional<String>getColorById(int purchaseID);
 
     public Optional<PurchaseResponse> findByColor(String Color);
 }

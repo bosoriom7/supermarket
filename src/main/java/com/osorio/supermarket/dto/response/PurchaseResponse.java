@@ -9,8 +9,8 @@ import lombok.Data;
 public class PurchaseResponse {
 
     @Id
-    private int pursacheId;
-    private String namePursache;
+    private int purchaseId;
+    private String namePurchase;
     private int valor;
 
 }
