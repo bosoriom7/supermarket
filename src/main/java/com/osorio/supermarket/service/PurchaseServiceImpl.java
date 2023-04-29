@@ -51,7 +51,6 @@ public class PurchaseServiceImpl implements PurchaseService{
 
     @Override
     public Optional<PurchaseResponse> findByColor(String color) {
-        //Optional<Purchase> purchaseByColor =
         return Optional.ofNullable(purchaseRepository.findByColor(color)
                 .map(purchaseResponseMapper)
                 .orElseThrow(IllegalArgumentException::new));
@@ -65,14 +64,6 @@ public class PurchaseServiceImpl implements PurchaseService{
                 .map(purchaseResponseMapper)
                 .orElseThrow(()-> new IllegalArgumentException(ERROR_PURCHASE));
     }
-
-/*    @Override
-    public Optional <PursacheResponse> getPursacheById(int purchaseID){
-        return pursacheRepository.findById(purchaseID)
-                .map(pursacheResponseMapper)
-                .or(()->{throw new IllegalArgumentException(ERROR_PURSACHE);});
-    }*/
-
 
     @Override
     public PurchaseResponse savePurchase(PurchaseRequest purchaseRequest) {
